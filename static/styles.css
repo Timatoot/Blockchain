@@ -1,0 +1,76 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #FFC0CB; /* Light pink background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard, .wallet {
+    width: 350px; /* Adjust the width to fit the content */
+    height: 250px; /* Adjust the height to fit the content */
+    background-color: #FFFFFF; /* Making the dashboard white for better contrast */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* This will add space between items */
+    border-radius: 10px; /* Optional: Rounds the corners */
+    position: relative; /* Added for absolute positioning inside */
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Center the content */
+    position: relative; /* For absolute positioning of logout */
+    padding-top: 20px; /* Adds padding at the top */
+}
+
+.user-info {
+    text-align: center; /* Ensure text is centered */
+}
+
+.user-info h1, .user-info p {
+    margin: 0; /* Removes margin to tighten spacing */
+}
+
+.funds {
+    text-align: center; /* Ensure text is centered */
+}
+
+.funds h1, .funds p {
+    margin: 0; /* Removes margin to tighten spacing */
+}
+
+.buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* Ensures buttons expand to full available width */
+    background-color: #555;
+    color: white;
+}
+
+.logout, .back {
+    background-color: #007BFF; /* Blue color */
+    color: white;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: absolute; /* Adjust the logout button to be absolute */
+    top: -25%; /* Right position from the top */
+    right: 10px; /* Right position from the right */
+    width: 20%; /* Smaller width for the button */
+}

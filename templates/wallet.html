@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <div class="wallet">
+        <header>
+            <div class="funds">
+                <h1>Wallet</h1>
+                <p>Balance: {{ bal }}</p>
+            </div>
+            <form action="/">
+                <button class="back">Back</button>
+            </form>
+        </header>
+        <div class="buttons">
+            <form action="/transactions/new" method="post">
+                <button class="transaction">Transaction</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

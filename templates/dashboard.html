@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <div class="user-info">
+                <h1>Tim R</h1>
+                <p>UUID: {{ uuid }}</p>
+            </div>
+            <button class="logout">Logout</button>
+        </header>
+        <div class="buttons">
+            <form action="/wallet">
+                <button class="wallet-button">Wallet</button>
+            </form>
+            <form action="/mine" method="get">
+                <button class="mine">Mine</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
