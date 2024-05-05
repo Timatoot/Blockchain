@@ -109,8 +109,25 @@ class Blockchain (object):
         :return: None
         """
 
-        parsed_url = urlparse(address)
-        self.nodes.add(parsed_url.netloc)
+        try:
+            parsed_url = urlparse(address)
+            if parsed_url.scheme and parsed_url.netloc:
+                if parsed_url.scheme in ['http', 'https']:
+                    if parsed_url.netloc not in self.nodes:
+                        self.nodes.add(parsed_url.netloc)
+                        return True
+                    else:
+                        print(f"Node {parsed_url.netloc} is already registered.")
+                        return False
+                else:
+                    print("Invalid URL scheme, only 'http' and 'https' are allowed.")
+                    return False
+            else:
+                print("Invalid URL. Please provide a valid URL.")
+                return False
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return False
 
     def valid_chain(self, chain):
         """
@@ -244,16 +261,24 @@ def mine():
 def register_nodes():
     values = request.get_json()
 
-    nodes = values.get('nodes')
-    if nodes is None:
-        return "Error: Please supply a valid list of nodes", 400
+    if not values or 'nodes' not in values:
+        return jsonify({"error": "Please supply a valid list of nodes"}), 400
 
+    nodes = values['nodes']
+    added_nodes = []
+    failed_nodes = []
     for node in nodes:
-        blockchain.register_node(node)
+        result = blockchain.register_node(node)
+        if result:
+            added_nodes.append(node)
+        else:
+            failed_nodes.append(node)
 
     response = {
-        'message': 'New nodes have been added',
-        'total_nodes': list(blockchain.nodes),
+        'message': 'Attempted to add nodes',
+        'added_nodes': added_nodes,
+        'failed_nodes': failed_nodes,
+        'total_nodes': list(blockchain.nodes)
     }
     return jsonify(response), 201
 
