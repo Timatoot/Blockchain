@@ -208,7 +208,7 @@ def full_chain():
 @app.route('/transactions/new', methods=['POST'])
 def new_transaction():
     values = request.get_json()
-
+    print(values)
     required = ['sender', 'recipient', 'amount']
     if not all(k in values for k in required):
         return 'Missing values', 400
@@ -221,14 +221,15 @@ def new_transaction():
 
     previous_hash = blockchain.hash(last_block)
     block = blockchain.new_block(proof, previous_hash)
-
     response = {'message': f'Transaction will be added to Block {index}',
                 'index': block['index'],
                 'transactions': block['transactions'],
                 'proof': block['proof'],
                 'previous_hash': block['previous_hash'],
                 }
-    return jsonify(response), 201
+    print(response)
+    return redirect('/wallet')
+    
 
 @app.route('/mine', methods=['GET'])
 def mine():
@@ -311,8 +312,48 @@ def wallet():
 @app.route('/transactions')
 def transactions():
     global balance
-
     return render_template('transactions.html', bal = balance)
+
+@app.route('/transactions/process', methods=['POST'])
+def process_transaction(sender=node_identifier):
+    allow_transaction = True
+
+    receiver = request.form.get('receiver')
+    amount = request.form.get('amount')
+
+    if not receiver or not amount:
+        flash('Please provide both recipient and amount.', 'error')
+        allow_transaction = False
+    
+    if float(amount) > balance or balance == float(0):
+        flash('Insufficient balance.')
+        allow_transaction = False
+
+    if allow_transaction:
+        try:
+            transaction = {
+                'recipient': receiver,
+                'sender': sender,
+                'amount': float(amount)
+            }
+
+            response = requests.post('http://127.0.0.1:5000/transactions/new', json=transaction)
+            if response.status_code == 201:
+                flash('Transaction processed successfully!', 'success')
+            else:
+                flash(f'Error processing transaction: {response.content.decode("utf-8")}', 'error')
+
+            return redirect('/wallet')
+
+        except ValueError:
+            flash('Invalid amount provided.', 'error')
+            return redirect('/wallet')
+        except Exception as e:
+            flash(f'An error occurred: {e}', 'error')
+            return redirect('/wallet')
+    else:
+        flash('Transaction not allowed.', 'error')
+        return redirect('/wallet')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

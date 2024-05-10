@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Transaction</title>
-    <link rel="stylesheet" href="static/transactions.css">
+    <link rel="stylesheet" href="/static/transactions.css">
 </head>
 <body>
     <div class="transaction-wrapper">
@@ -12,16 +12,16 @@
             <button class="back-button" onclick="window.location.href='/wallet'">Back</button>
             <h1>Transaction</h1>
             <p class="balance">Balance: {{ bal }}</p>
-            <form class="transaction-form" action="/transactions/new" method="post">
+            <form class="transaction-form" action="/transactions/process" method="post">
                 <div class="form-group">
-                    <label for="receiver">Receiver:</label>
-                    <input type="text" id="receiver" name="receiver">
+                    <label for="receiver">Recipient:</label>
+                    <input type="text" id="receiver" name="receiver" required>
                 </div>
                 <div class="form-group">
                     <label for="amount">Amount:</label>
-                    <input type="text" id="amount" name="amount">
+                    <input type="number" id="amount" name="amount" step="0.01" required>
                 </div>
-                <button class="transaction-button">Send</button>
+                <button type="submit" class="transaction-button">Send</button>
             </form>
         </div>
     </div>
