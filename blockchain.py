@@ -308,5 +308,11 @@ def wallet():
     global balance
     return render_template('wallet.html', bal = balance)
 
+@app.route('/transactions')
+def transactions():
+    global balance
+
+    return render_template('transactions.html', bal = balance)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
