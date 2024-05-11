@@ -10,7 +10,6 @@ body, html {
 
 .dashboard, .wallet {
     width: 350px; /* Adjust the width to fit the content */
-    height: 250px; /* Adjust the height to fit the content */
     background-color: #FFFFFF; /* Making the dashboard white for better contrast */
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

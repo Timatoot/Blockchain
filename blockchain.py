@@ -281,6 +281,7 @@ def register_nodes():
         'failed_nodes': failed_nodes,
         'total_nodes': list(blockchain.nodes)
     }
+    print(response)
     return jsonify(response), 201
 
 @app.route('/nodes/resolve', methods=['GET'])
@@ -354,6 +355,27 @@ def process_transaction(sender=node_identifier):
     else:
         flash('Transaction not allowed.', 'error')
         return redirect('/wallet')
+    
+@app.route('/add/node')
+def add_node():
+    return render_template('node.html')
+
+@app.route('/nodes/process', methods=['POST'])
+def process_node():
+    node = request.form.get('node')
+
+    if not node:
+        flash('Please provide a valid node.', 'error')
+        return redirect('/nodes')
+
+    nodeRegister = {'nodes': node}
+
+    response = requests.post('http://127.0.0.1:5000/nodes/register', json=nodeRegister)
+    if response.status_code == 201:
+        flash('Node added successfully!', 'success')
+    else:
+        flash(f'Error adding node: {response.content.decode("utf-8")}', 'error')
+    return redirect('/add/node')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

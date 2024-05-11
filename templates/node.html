@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Node</title>
+    <link rel="stylesheet" href="/static/transactions.css">
+</head>
+<body>
+    <div class="transaction-wrapper">
+        <div class="transactions-page">
+            <button class="back-button" onclick="window.location.href='/wallet'">Back</button>
+            <h1>Register Node</h1>
+            <form class="transaction-form" action="/nodes/process" method="post">
+                <div class="form-group">
+                    <label for="node">Node IP:</label>
+                    <input type="text" id="node" name="node" required>
+                </div>
+                <button type="submit" class="transaction-button">Register</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
